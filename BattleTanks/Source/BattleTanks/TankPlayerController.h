@@ -16,25 +16,19 @@ class BATTLETANKS_API ATankPlayerController : public APlayerController
 {
 	GENERATED_BODY()
 	
-public:
-
-	void AimTowardsCrosshair();
-	
-	virtual void BeginPlay() override;
-
-	virtual void Tick(float DeltaTime) override;
-
 protected:
 	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
 		void FoundAimingComponent(UTankAimingComponent* AimCompRef);
 
 private:
 
+	virtual void BeginPlay() override;
+
+	virtual void Tick(float DeltaTime) override;
+
+	void AimTowardsCrosshair();
+
 	bool GetSightRayHitLocation(FVector & HitLocation) const;
-
-	bool GetLookDirection(FVector2D ScreenLocation, FVector & LookDirection) const;
-
-	bool GetLookVectorHitLocation(FVector LookDirection, FVector & HitLocation) const;
 
 	UPROPERTY(EditDefaultsOnly)
 	float CrossHairXLocation = 0.5;
@@ -45,5 +39,6 @@ private:
 	UPROPERTY(EditDefaultsOnly)
 	float LineTraceRange = 1000000;
 
-	UTankAimingComponent* AimingComponent;
+	bool GetLookDirection(FVector2D ScreenLocation, FVector & LookDirection) const;
+	bool GetLookVectorHitLocation(FVector LookDirection, FVector & HitLocation) const;
 };
